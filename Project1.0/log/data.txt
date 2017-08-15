@@ -1,0 +1,4 @@
+[error]log.cpp line:18 func():main STT
+[error]log.cpp line:19 func():main 999
+[error]log.cpp line:20 func():main LSS
+[error]log.cpp line:21 func():main 

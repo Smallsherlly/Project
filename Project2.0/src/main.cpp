@@ -1,0 +1,25 @@
+#include <string>
+#include <iostream>
+#include <tinyxml.h>
+#include <map>
+#include <vector>
+#include <log.h>
+#include <parsexml.h>
+#include <mysql.h>
+
+
+int main(int argc, char** argv) {
+	string s("conf/school.xml");
+	ParseXml px(s);
+	LOG_ERROR("ERROR\n");
+	px.parse();
+	SQL sql;
+	sql.Connect();
+	sql.Delete("delete from lll");
+	sql.Delete("delete from xxx");
+	cout << sql.getErr()<< endl;
+	cout << px.getValue("address") << endl;
+	return 0;
+}
+
+
