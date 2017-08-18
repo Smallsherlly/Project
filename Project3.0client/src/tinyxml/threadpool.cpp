@@ -1,0 +1,75 @@
+#include "threadpool.h"
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <pthread.h>
+
+   //构造函数
+ThreadPool::ThreadPool(size_t num)
+{
+	m_num = num;
+}
+
+void * ThreadPool::work(void *p)
+{
+	ThreadPool* pool = (ThreadPool*)p;
+	int fd = pool->m_socketList.pop();
+	int inum = 1314;
+	while(1)
+	{
+		
+		//接收请求
+		char buf[1024] = {};
+
+		int ret = recv(fd,buf,sizeof(buf),0);
+		if(0 >= ret)
+		{
+			perror("recv");
+			pthread_exit(NULL);
+		}
+
+
+		if('!' == buf[0])
+		{
+			close(fd);
+	//		close(sockfd);
+			printf("与客户端%d的通信结束\n",inum);
+			pthread_exit(NULL);
+		}
+		printf("客户端%d说：%s\n",inum,buf);
+		printf("告诉客户端%d：",inum);
+		scanf("%s",buf);
+		
+		
+		//响应请求
+		ret = send(fd,buf,strlen(buf)+1,0);
+		if(0 > ret)
+		{	
+			perror("send");
+			pthread_exit(NULL);
+
+		}
+	}
+}//线程函数
+void ThreadPool::start()//启动所有线程
+{
+	cout << "start\n";
+	for(size_t i=0; i<m_num; i++)
+	{
+		pthread_create(&pth_id,NULL,work,(void*)this);
+		m_pthreadList.push(pth_id);
+		pthread_join(pth_id,NULL);
+	}
+}
+
+void ThreadPool::setWork(int socketid)
+{
+	m_socketList.push(socketid);
+}
+
+
+

@@ -1,0 +1,97 @@
+drop table studentInfo;
+drop table instructorInfo; 
+drop table schoolBook;
+drop table testInfo;
+drop table testResult;
+drop table passCar;
+drop table passCarBalance;
+
+create table studentInfo
+(
+	id INTEGER,
+	name TEXT,
+	sex TEXT,
+	phoneNumber INTEGER,
+	birth TEXT,
+	idNumber TEXT,
+	nation TEXT,
+	originPlace TEXT,
+	remarks TEXT
+);
+
+create table instructorInfo
+(
+	id INTEGER,
+	name TEXT,
+	sex TEXT,
+	phoneNumber INTEGER,
+	birth TEXT,
+	idNumber TEXT,
+	nation TEXT,
+	originPlace TEXT,
+	remarks TEXT
+);
+
+create table schoolBook
+(
+	id INTEGER,
+	college TEXT,
+	major TEXT,
+	class TEXT,
+	grade TEXT,
+	isOk TEXT,
+	getInTime TEXT,
+	lengthOfSchool INTEGER,
+	stuType TEXT,
+	isAtSchool TEXT
+);
+
+create table testInfo
+(
+	id INTEGER,
+	year INTEGER,
+	semester INTEGER,
+	classNum INTEGER,
+	className TEXT,
+	name TEXT,
+	testTime TEXT,
+	testPlace TEXT,
+	testWay TEXT,
+	seatNum INTEGER
+);
+
+create table testResult
+(
+	id INTEGER,
+	year INTEGER,
+	semester INTEGER,
+	classNum INTEGER,
+	className TEXT,
+	classStyle TEXT,
+	credit INTEGER,
+	classCollege TEXT
+);
+
+create table passCar
+(
+	id INTEGER,
+	carNum INTEGER,
+	adminNum TEXT,
+	identify TEXT,
+	name TEXT,
+	sex TEXT,
+	class TEXT,
+	isOk TEXT,
+	okDate TEXT
+);
+
+create table passCarBalance
+(
+	id INTEGER,
+	carNum INTEGER,
+	adminNum TEXT,
+	name TEXT,
+	balance INTEGER
+);
+
+

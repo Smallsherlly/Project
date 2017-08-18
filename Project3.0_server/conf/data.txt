@@ -1,0 +1,1 @@
+[error]src/main.cpp line:33 func():main socket_ERROR[error]src/main.cpp line:26 func():main NONONO baby![error]src/main.cpp line:26 func():main NONONO baby![error]src/main.cpp line:26 func():main NONONO baby!

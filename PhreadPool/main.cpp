@@ -1,0 +1,96 @@
+#include <iostream>
+#include <QApplication>
+#include <QThread>
+#include <QMutex>
+#include <QWaitCondition>
+#include <QTime>
+#include <QObject>  
+#include <QRunnable>  
+#include <QThreadPool>  
+#include <QDebug>  
+
+using namespace std;
+/*
+class Born:public QThread
+{
+
+public:
+	void run()
+	{
+
+	}
+};
+
+class ThreadPool
+{   
+private:
+    //消费容器里客户
+    list<int> m_socketList;
+    //所有的线程    
+    list<int> m_pthreadList;
+    //线程个数
+	size_t m_num;
+	//互斥量
+    QMutex mutex;//用于保护m_socketList
+public:
+   //构造函数
+	ThreadPool(size_t num)
+	{
+		m_num = num;
+		for(size_t i=0; i<m_num; i++)
+		{
+			m_pthreadList.push_back((new Born())->currentThreadId());
+		}
+	}
+
+    void * work(void *p);//线程函数
+    void start();//启动所有线程
+    void setWork(int socketid);
+
+	
+};
+
+
+class Kill:public QThread
+{
+
+public:
+	void run()
+	{
+
+	}
+};
+
+*/
+class HelloWorldTask : public QRunnable  
+{  
+     // 线程执行任务：每间隔1s打印出线程的信息  
+    void run()  
+    {  
+    	cout << "+++++++++++++\n";
+        for (int nCount = 0; nCount < 5; nCount++)  
+        {  
+        	qDebug() << QThread::currentThread();  
+        //sleep(1);  
+        }  
+    }  
+};  
+int main(int argc, char *argv[])  
+{  
+    QCoreApplication a(argc, argv);  
+  
+    QThreadPool   threadpool;              // 构建一个本地的线程池  
+    threadpool.setMaxThreadCount(3);         // 线程池中最大的线程数  
+    cout << "------------\n";
+    HelloWorldTask   *task = new HelloWorldTask();
+    QThreadPool::globalInstance()->start(task);
+    for (int nNum = 0; nNum < 100; nNum++)  
+    {  cout << "------------\n";
+        HelloWorldTask   *task;    // 循环构建可在线程池中运行的任务  
+        threadpool.start(task); 
+        cout << "111111\n";     //线程池分配一个线程运行该任务  
+      	sleep(1);  
+      	
+    }  
+    return a.exec();  
+}  

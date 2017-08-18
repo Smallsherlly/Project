@@ -1,0 +1,49 @@
+#include <string>
+#include <iostream>
+#include <tinyxml.h>
+#include <map>
+#include <vector>
+#include <log.h>
+#include <parsexml.h>
+#include <mysql.h>
+#include <sockApi.h>
+#include <threadpool.h>
+
+struct Student
+{
+	int id;
+	int age;
+	char name[40];
+};
+
+
+
+int main(int argc, char** argv) 
+{	
+//	SQL sql;
+//	sql.Connect();
+
+//	char str[100] = "insert into studentInfo (id,name)values(10001,'林书思')";
+	//sql.Insert(s.c_str());
+	
+	//ThreadPool pool(10);
+	//pool.start();
+	//ParseXml parse("/home/ubuntu/flexible_pig/Learning/HugeProject/Project4.0/conf/ll.xml");
+	//LOG_ERROR("NONONO baby!\n");
+	//parse.parse(); 
+	Student stu = {1001,20,"林书思"};
+	
+	CServerSock server;
+	char buf[1024] = {};
+	//string s;
+	memcpy(buf,&stu,sizeof(Student));
+	Student stu1 ;
+	stu1 = *((Student*)buf);
+	//cout <<stu1.id<< endl;
+	printf("%s",stu1.name);
+	return 0;
+}
+
+
+
+
