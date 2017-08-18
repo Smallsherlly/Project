@@ -1,0 +1,116 @@
+drop table schoolBook;		
+drop table testInfo;
+drop table testResult;
+drop table collegeInfo;
+drop table passCar;
+drop table passCarBalance;
+drop table studentInfo;
+drop table instructorInfo;
+
+create table studentInfo
+(
+	id INTEGER primary key,
+	name varchar(20),
+	sex char(1),
+	phoneNumber varchar(11),
+	birth varchar(20),
+	idNumber varchar(18),
+	nation varchar(10),
+	originPlace varchar(10),
+	remarks TEXT
+);
+
+create table instructorInfo
+(
+	id INTEGER primary key,
+	name varchar(20),
+	sex char(1),
+	phoneNumber varchar(11),
+	birth varchar(20),
+	idNumber varchar(18),
+	nation varchar(10),
+	workPlace varchar(20),
+	insClass INTEGER,
+	remarks TEXT
+);
+
+create table collegeInfo
+(
+	collegeName varchar(20),
+	classNum INTEGER,
+	major	varchar(20),
+	insId	INTEGER,
+	stuNum	smallint,
+	grade	tinyint,
+	foreign key(id) references instructorInfo(id)
+);
+
+create table schoolBook
+(
+	id INTEGER,
+	college varchar(20),
+	major varchar(20),
+	classNum INTEGER,
+	grade tinyint,
+	isOk varchar(10),
+	getInTime varchar(20),
+	lengthOfSchool tinyint,
+	stuType varchar(10),
+	isAtSchool varchar(10),
+	foreign key(id) references studentInfo(id)
+);
+
+create table testInfo
+(
+	id INTEGER, 
+	year smallint,
+	semester tinyint,
+	classNum INTEGER,
+	className varchar(20),
+	name varchar(20),
+	testTime varchar(20),
+	testPlace varchar(20),
+	testWay varchar(20),
+	seatNum INTEGER,
+	foreign key(id) references studentInfo(id)
+);
+
+create table testResult
+(
+	id INTEGER,
+	year INTEGER,
+	semester INTEGER,
+	classNum INTEGER,
+	className varchar(20),
+	classStyle varchar(10),
+	credit tinyint,
+	score smallint,
+	classCollege varchar(20),
+	foreign key(id) references studentInfo(id)
+);
+
+create table passCar
+(
+	id INTEGER,
+	carNum INTEGER,
+	adminNum INTEGER,
+	identify varchar(20),
+	name varchar(20),
+	sex char(1),
+	classNum INTEGER,
+	isOk varchar(10),
+	okDate varchar(20),
+	foreign key(id) references studentInfo(id)
+);
+
+create table passCarBalance
+(
+	id INTEGER,
+	carNum INTEGER,
+	adminNum INTEGER,
+	name varchar(20),
+	balance INTEGER,
+	foreign key(id) references studentInfo(id)
+);
+
+
