@@ -23,13 +23,13 @@ int main(int argc, char** argv)
 	memcpy(buf,&stu,sizeof(studentInfo));
 	
 	CClientSock client;
-	client.connectS();
+	client.connect();
 	client.writeN(buf,sizeof(studentInfo));
-	while(1)
+/*	while(1)
 	{
 		client.send_notify();
 		sleep(1);
-	}
+	}*/
 
 	
 	return 0;

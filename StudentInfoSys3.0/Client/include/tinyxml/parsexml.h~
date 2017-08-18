@@ -1,0 +1,96 @@
+#include <string>
+#include <iostream>
+#include <tinyxml.h>
+#include <map>
+#include <vector>
+#include <log.h>
+using namespace std;
+
+
+typedef pair<string,string> PAIR;
+typedef multimap<PAIR,string> CON;
+class ParseXml
+{
+private:
+    string file_name;
+    map<string,string> m_map;
+    CON m_mmap;
+   
+public:
+    ParseXml(string path)
+    {
+    	file_name = path;
+    };
+    ParseXml();
+    void circle_fun(TiXmlElement*);
+    
+    void setXmlFile(string path)
+    {
+    	file_name = path;
+    }
+    
+    void show()
+    {
+    	cout << "--------------------\n";
+		multimap<string,string>::iterator mp = m_map.begin();
+		for(;mp!=m_map.end();mp++)
+		{
+			cout << (*mp).first << " " << (*mp).second << endl;
+		}
+		cout << "+++++++++++++++++++++\n";
+    }
+    bool parse();
+    
+    string getValue(string name)
+    {
+    	return m_map[name];
+    }//key value
+    void setValue(string name,string value)
+    {
+    	m_map[name] = value;
+    }
+    void save()
+    {
+    	//doc.SaveFile(file_name);
+    }
+};
+
+//遍历递归
+void ParseXml::circle_fun(TiXmlElement* rootElement)
+{
+	if(rootElement == NULL)
+		return;
+	
+
+	vector<string> map;
+
+	if(rootElement->FirstChildElement() == NULL)
+	{
+		string contactType = rootElement->Value();
+		string contactValue = rootElement->GetText();
+		m_map.insert(PAIR(rootElement->Value(),rootElement->GetText()));
+	}
+	
+	circle_fun(rootElement->FirstChildElement());
+
+	circle_fun(rootElement->NextSiblingElement());
+}
+bool ParseXml::parse()
+{
+	TiXmlDocument doc;
+	if(doc.LoadFile(file_name.c_str()))
+	{
+		doc.Print();
+		
+	}else
+	{
+		cout << "can not parse xml conf/school.xml\n";
+		return false;
+	}
+	TiXmlElement* rootElement = doc.RootElement();  //School元素  
+
+	circle_fun(rootElement);
+	show();
+	return true;
+}
+

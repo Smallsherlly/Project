@@ -1,1 +1,79 @@
 [error]src/main.cpp line:33 func():main socket_ERROR[error]src/main.cpp line:26 func():main NONONO baby![error]src/main.cpp line:26 func():main NONONO baby![error]src/main.cpp line:26 func():main NONONO baby![error]src/main.cpp line:32 func():main NONONO baby!
+[error]src/tinyxml/sockApi.cpp line:247 func():connect errno:111 connect to :0 error!
+[error]src/tinyxml/sockApi.cpp line:247 func():connect errno:111 connect to :0 error!
+[error]src/tinyxml/sockApi.cpp line:247 func():connect errno:111 connect to :0 error!
+[error]src/tinyxml/sockApi.cpp line:248 func():connect errno:111 connect to :0 error!
+[error]src/tinyxml/sockApi.cpp line:144 func():listen errno: 9 listen error
+[error]src/tinyxml/sockApi.cpp line:248 func():connect errno:111 connect to :0 error!
+[error]src/tinyxml/sockApi.cpp line:248 func():connect errno:111 connect to :0 error!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58836 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58838 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58839 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58840 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58841 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58842 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58843 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58844 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58845 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58846 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58847 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58848 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58849 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58850 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58851 connected!
+[error]src/tinyxml/sockApi.cpp line:163 func():accept client 127.0.0.1:58852 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58853 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58854 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58855 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58856 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:58857 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58858 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58859 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58860 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58861 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58862 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58863 connected!
+[error]src/tinyxml/sockApi.cpp line:242 func():connect errno:111 connect to :0 error!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58865 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58866 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58867 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58868 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58869 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58870 connected!
+[error]src/tinyxml/sockApi.cpp line:157 func():accept client 127.0.0.1:58871 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:58872 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:58873 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:58874 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:58875 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58876 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58877 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58878 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58879 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58880 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58881 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58882 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58883 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58884 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58885 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58886 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58887 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58888 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58889 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58890 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58891 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58892 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58893 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58894 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58895 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58896 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58897 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58898 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58899 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58900 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58901 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58902 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58904 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58905 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58906 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58907 connected!
+[error]src/tinyxml/sockApi.cpp line:159 func():accept client 127.0.0.1:58908 connected!

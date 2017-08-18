@@ -1,0 +1,11 @@
+#include <log.h>
+
+
+Log::Log()
+{
+	//先清空错误日志的内容
+	ofstream fout(LOGPATH);
+	fout.close();
+}
+
+
