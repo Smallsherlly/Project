@@ -1,0 +1,319 @@
+#include "threadpool.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <string>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <sockApi.h>
+#include <mysql.h>
+#include <log.h>
+#include <vector>
+#include <list>
+#include <class.h>
+#include <sockApi.h>
+#include <socknotify.h>
+
+extern string LOG_LEVEL;
+extern string LOG_FILE;
+extern string LOG_PATH;
+
+CNotify* proxy(CNotify& notify);
+CNotify* proStudentInfo(CNotify& notify);
+CNotify* proTeacherInfo(CNotify& notify);
+CNotify* proLOG(CNotify& notify);
+
+SQL sql;
+   //构造函数
+ThreadPool::ThreadPool(size_t num)
+{
+	m_num = num;
+}
+
+ThreadPool::~ThreadPool()
+{
+	//stop();
+}
+
+void ThreadPool::stop()
+{
+	list<pthread_t>::iterator it = m_pthreadList.begin();
+	for(; it!=m_pthreadList.end() ; it++)
+	{
+		pthread_join(*it,NULL);
+	}
+	m_pthreadList.clear();
+}
+
+void * ThreadPool::work(void *p)
+{
+	ThreadPool* pool = (ThreadPool*)p;
+	sql.Connect();
+	int fd = 0;
+	while(1)
+	{
+		fd = 0;
+		while(!fd)
+		{
+			fd = pool->m_socketList.pop();
+		}
+		CSockApi cs(fd);
+		while(1){
+			//接收请求
+		
+			CNotify notify;
+			while(!cs.receive_notify(notify));
+			if(notify.get_type()==10000)
+			{
+				LOG_ERROR("disconnect!\n");
+				break;
+			}
+			LOG_ERROR("type:%d",notify.get_type());
+			CNotify* notify_ret = proxy(notify);
+			if(notify_ret!=NULL)
+			{
+				LOG_ERROR("return\n");
+				cs.send_notify(notify_ret);
+			}else
+			{
+				LOG_ERROR("NO return\n");
+			}	
+		}
+		
+	}
+	return pool;
+}//线程函数
+void ThreadPool::start()//启动所有线程
+{
+	for(size_t i=0; i<m_num; i++)
+	{
+		pthread_create(&pth_id,NULL,work,(void*)this);
+		m_pthreadList.push_back(pth_id);
+		
+	}
+
+}
+
+void ThreadPool::setWork(int socketid)
+{
+	m_socketList.push(socketid);
+}
+
+
+CNotify* proxy(CNotify& notify)
+{
+	if(notify.get_type()>=20000)
+		return proLOG(notify);
+	else
+		switch(notify.get_type()%10000/100)
+		{
+			case 1:
+			
+				return proStudentInfo(notify);
+			case 2:
+				return proTeacherInfo(notify);
+			
+			default:
+				break;
+		}
+	return NULL;
+}
+
+CNotify* proStudentInfo(CNotify& notify)
+{
+	LOG_ERROR("proxy student\n");
+	char* buf = new char[1024];	
+	CNotify* notify_ret = new CNotify;
+	switch(notify.get_type())
+	{
+		case PROXY_STUDENT_INFO_ADD:
+		{
+			studentInfo stu;
+			stu = *(studentInfo*)notify.get_data(&stu);
+			sprintf(buf,"insert into studentInfo (id,name,sex,phoneNumber,birth,idNumber,nation,originPlace,remarks)values(%d,'%s','%s','%s','%s','%s','%s','%s','%s')",stu.m_id,stu.m_name,stu.m_sex,stu.m_phoneNumber,stu.m_birth,stu.m_idNumber,stu.m_nation,stu.m_originPlace,stu.m_remarks);
+			
+			sql.Insert(buf);
+			notify_ret = new CNotify(PROXY_STUDENT_INFO_ADD_RET,16,1);
+			break;
+		}
+		case PROXY_STUDENT_INFO_DEL:
+		{
+			studentInfo stu;
+			stu = *(studentInfo*)notify.get_data(&stu);
+			sprintf(buf,"delete from studentInfo where id=%d",stu.m_id);
+			sql.Delete(buf);
+			notify_ret = new CNotify(PROXY_STUDENT_INFO_DEL_RET,16,1);
+			break;
+		}
+		case PROXY_STUDENT_INFO_ALT:
+		{
+			studentInfo stu;
+			stu = *(studentInfo*)notify.get_data(&stu);
+			sprintf(buf,"update studentInfo set name='%s',sex='%s',phoneNumber='%s',birth='%s', idNumber='%s',nation='%s',originPlace='%s',remarks='%s' where id=%d",stu.m_name,stu.m_sex,stu.m_phoneNumber,stu.m_birth,stu.m_idNumber,stu.m_nation,stu.m_originPlace,stu.m_remarks,stu.m_id);
+			sql.Update(buf);
+			notify_ret = new CNotify(PROXY_STUDENT_INFO_ALT_RET,16,1);
+			break;
+		}
+		case PROXY_STUDENT_INFO_CHE:
+		{
+			list<vector<string> > listRes;
+			studentInfo stu;
+			stu = *(studentInfo*)notify.get_data(&stu);
+			LOG_ERROR("m_id:%d\n",stu.m_id);
+			sprintf(buf,"select * from studentInfo where id = %d",stu.m_id);
+			sql.Select(buf,listRes);
+			list<vector<string> >::iterator  pt = listRes.begin();
+			vector<string>::iterator it = (*pt++).begin();
+			
+
+			stu.m_id = atoi((*it++).c_str());
+			LOG_ERROR("str:%s\n",(*it).c_str());
+			strcpy(stu.m_name,(*it++).c_str());
+			LOG_ERROR("str:%s\n",stu.m_name);
+			strcpy(stu.m_sex,(*it++).c_str());
+			strcpy(stu.m_phoneNumber,(*it++).c_str());
+			strcpy(stu.m_birth,(*it++).c_str());
+			strcpy(stu.m_idNumber,(*it++).c_str());
+			strcpy(stu.m_nation,(*it++).c_str());
+			strcpy(stu.m_originPlace,(*it++).c_str());
+			strcpy(stu.m_remarks,(*it).c_str());
+			
+			if(notify_ret!=NULL)
+				delete notify_ret;
+			notify_ret = new CNotify(PROXY_STUDENT_INFO_CHE_RET,sizeof(studentInfo),1);
+			notify_ret->set_data(stu);
+			
+			break;
+		}
+		default:
+			LOG_ERROR("singnal error\n");
+			break;
+	}
+	return notify_ret;
+}
+
+CNotify* proTeacherInfo(CNotify& notify)
+{
+	LOG_ERROR("proxy teacher\n");
+	char* buf = new char[1024];	
+	CNotify* notify_ret = new CNotify;
+	switch(notify.get_type())
+	{
+		case PROXY_TEACHER_INFO_ADD:
+		{
+			teacherInfo tea;
+			tea = *(teacherInfo*)notify.get_data(&tea);
+			sprintf(buf,"insert into instructorInfo (id,name,sex,phoneNumber,birth,idNumber,nation,workPlace,insClass,remarks)values(%d,'%s','%s','%s','%s','%s','%s','%s',%d,'%s')",tea.m_id,tea.m_name,tea.m_sex,tea.m_phoneNumber,tea.m_birth,tea.m_idNumber,tea.m_nation,tea.m_workPlace,tea.m_insClass,tea.m_remarks);
+			
+			sql.Insert(buf);
+			notify_ret = new CNotify(PROXY_TEACHER_INFO_ADD_RET,16,1);
+			break;
+		}
+		case PROXY_TEACHER_INFO_DEL:
+		{
+			teacherInfo tea;
+			tea = *(teacherInfo*)notify.get_data(&tea);
+			sprintf(buf,"delete from instructorInfo where id=%d",tea.m_id);
+			sql.Delete(buf);
+			notify_ret = new CNotify(PROXY_TEACHER_INFO_DEL_RET,16,1);
+			break;
+		}
+		case PROXY_TEACHER_INFO_ALT:
+		{
+			teacherInfo tea;
+			tea = *(teacherInfo*)notify.get_data(&tea);
+			sprintf(buf,"update teacherInfo set name='%s',sex='%s',phoneNumber='%s',birth='%s', idNumber='%s',nation='%s',workPlace='%s',insClass=%d,remarks='%s' where id=%d",tea.m_name,tea.m_sex,tea.m_phoneNumber,tea.m_birth,tea.m_idNumber,tea.m_nation,tea.m_workPlace,tea.m_insClass,tea.m_remarks,tea.m_id);
+			sql.Update(buf);
+			notify_ret = new CNotify(PROXY_TEACHER_INFO_ALT_RET,16,1);
+			break;
+		}
+		case PROXY_TEACHER_INFO_CHE:
+		{
+			list<vector<string> > listRes;
+			teacherInfo tea;
+			tea = *(teacherInfo*)notify.get_data(&tea);LOG_ERROR("id:%d\n",tea.m_id);
+			sprintf(buf,"select * from instructorInfo where id = %d",tea.m_id);
+			sql.Select(buf,listRes);
+			vector<string>::iterator it = (*(listRes.begin())).begin();
+		
+			tea.m_id = atoi((*it++).c_str());
+			strcpy(tea.m_name,(*it++).c_str());
+			LOG_ERROR("str:%s\n",tea.m_name);
+			strcpy(tea.m_sex,(*it++).c_str());
+			strcpy(tea.m_phoneNumber,(*it++).c_str());
+			strcpy(tea.m_birth,(*it++).c_str());
+			strcpy(tea.m_idNumber,(*it++).c_str());
+			strcpy(tea.m_nation,(*it++).c_str());
+			strcpy(tea.m_workPlace,(*it++).c_str());
+			tea.m_insClass = atoi((*it++).c_str());
+			strcpy(tea.m_remarks,(*it).c_str());
+			if(notify_ret!=NULL)
+				delete notify_ret;
+			notify_ret = new CNotify(PROXY_TEACHER_INFO_CHE_RET,sizeof(teacherInfo),1);
+			notify_ret->set_data(tea);
+			
+			break;
+		}
+		default:
+			LOG_ERROR("singnal error\n");
+			break;
+	}
+	return notify_ret;
+}
+
+CNotify* proLOG(CNotify& notify)
+{
+	char* buf = new char[1024];	
+	CNotify* notify_ret = new CNotify;
+	switch(notify.get_type())
+	{
+		case PROXY_TEACHER_LOGIN:
+		{
+			teacherLogInfo tea;
+			tea = *(teacherLogInfo*)notify.get_data(&tea);
+			
+			list<vector<string> > listRes;
+		
+			sprintf(buf,"select * from teacherLogInfo where id = %d",tea.m_id);
+			if(sql.Select(buf,listRes) == -1)
+				return NULL;
+			vector<string>::iterator it = (*(listRes.begin())).begin();
+			if((*it).size() == 0)
+				return NULL;
+			it++;
+			LOG_ERROR("psw:%s\n",(*it).c_str());
+			if(strcmp(tea.m_psw,(*it).c_str()) == 0)
+				notify_ret = new CNotify(PROXY_TEACHER_LOGIN_RET_Y,16,1);
+			else
+				notify_ret = new CNotify(PROXY_TEACHER_LOGIN_RET_N,16,1);
+			break;
+		}
+		case PROXY_STUDENT_LOGIN:
+		{	
+			studentLogInfo stu;
+			stu = *(studentLogInfo*)notify.get_data(&stu);
+			list<vector<string> > listRes;
+			sprintf(buf,"select * from studentLogInfo where id = %d",stu.m_id);
+			if(sql.Select(buf,listRes) == -1)
+				return NULL;	
+			vector<string>::iterator it = (*(listRes.begin())).begin();
+			if((*it).size() == 0)
+				return NULL;
+			it++;
+
+			if(strcmp(stu.m_psw,(*it).c_str()) == 0)
+				notify_ret = new CNotify(PROXY_STUDENT_LOGIN_RET_Y,16,1);
+			else
+				notify_ret = new CNotify(PROXY_STUDENT_LOGIN_RET_N,16,1);
+			break;
+		}
+	}	
+	return notify_ret;
+}
+
+
+

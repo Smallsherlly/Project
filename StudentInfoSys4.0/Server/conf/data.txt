@@ -1,0 +1,62 @@
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect Can't connect to MySQL server on 'localhost' (111)
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/mysql.cpp line:33 func():Connect Can't connect to MySQL server on 'localhost' (111)
+[error]src/tinyxml/mysql.cpp line:33 func():Connect 
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34311 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34312 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34313 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34314 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34315 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34316 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34317 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34318 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34319 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34320 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34321 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34322 connected!
+[error]src/tinyxml/sockApi.cpp line:158 func():accept client 127.0.0.1:34323 connected!
+[error]src/tinyxml/threadpool.cpp line:75 func():work type:20200[error]src/tinyxml/threadpool.cpp line:288 func():proLOG psw:5522
+[error]src/tinyxml/threadpool.cpp line:79 func():work return

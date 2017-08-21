@@ -1,0 +1,6 @@
+[error]src/tinyxml/threadpool.cpp line:72 func():work sockid:4
+[error]src/tinyxml/threadpool.cpp line:73 func():work id:14036833
+name:石婷婷
+[error]src/tinyxml/threadpool.cpp line:72 func():work sockid:4
+[error]src/tinyxml/threadpool.cpp line:73 func():work id:14036833
+name:石婷婷

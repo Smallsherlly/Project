@@ -1,6 +1,7 @@
 #include <mysql.h>
 #include <mysql/mysql.h>
 #include <cstring>
+#include <log.h>
 
 SQL::SQL()
 {
@@ -29,7 +30,7 @@ int SQL::Connect(const char *database,const char *host,const char *port,const ch
 	conn = mysql_init(NULL);
 	if (!mysql_real_connect(conn,host,user,passwd,database,0,NULL,0)) 
     {
-        sprintf(msg, "%s\n%s",msg,mysql_error(conn));
+        LOG_ERROR"%s\n",mysql_error(conn));
         return -1;
     }
     if(mysql_set_character_set(conn,charset))
@@ -54,7 +55,7 @@ int SQL::Select(const char *sql,list<vector<string> >& listRes)
 
 	if(mysql_query(conn,sql))
 	{
-		sprintf(msg, "%s%s\n",msg,mysql_error(conn));
+		LOG_ERROR"%s\n",mysql_error(conn));
         return -1;
 	}
 	
@@ -64,8 +65,7 @@ int SQL::Select(const char *sql,list<vector<string> >& listRes)
 		vector<string> v_str;
 		for(i=0; i<mysql_num_fields(res); i++)
 		{
-	    	printf("%s ", row[i]);
-			if(row[i] == NULL)
+			if(row[i] == NULL)		//desc时，row[i]为空
 				break;
 	    	string str(row[i]);
 	    	v_str.push_back(str);
@@ -85,9 +85,11 @@ int SQL::Select(const char *sql,list<vector<string> >& listRes)
 	*/
 int SQL::Insert(const char* sql)
 {
+	if(sql == NULL)
+		LOG_ERROR("sql is null!\n");
 	if(mysql_query(conn,sql))
 	{
-		sprintf(msg, "%s%s\n",msg,mysql_error(conn));
+		LOG_ERROR("%s\n",mysql_error(conn));
         return -1;
 	}
 	return 0;
@@ -98,7 +100,7 @@ int SQL::Update(const char* sql)
 	list<MYSQL_RES*> listres; 
 	if(mysql_query(conn,sql))
 	{
-		sprintf(msg, "%s%s\n",msg,mysql_error(conn));
+		LOG_ERROR"%s\n",mysql_error(conn));
         return -1;
 	}
 	return 0;
@@ -108,7 +110,7 @@ int SQL::Delete(const char* sql)
 {
 	if(mysql_query(conn,sql))
 	{
-		sprintf(msg, "%s%s\n",msg,mysql_error(conn));
+		LOG_ERROR"%s\n",mysql_error(conn));
         return -1;
 	}
 	return 0;
@@ -118,7 +120,7 @@ int SQL::Create(const char* sql)
 {
 	if(mysql_query(conn,sql))
 	{
-		sprintf(msg, "%s%s\n",msg,mysql_error(conn));
+		LOG_ERROR"%s\n",mysql_error(conn));
         return -1;
 	}
 	return 0;

@@ -1,1 +1,1 @@
-[error]src/main.cpp line:33 func():main socket_ERROR[error]src/main.cpp line:26 func():main NONONO baby![error]src/main.cpp line:26 func():main NONONO baby![error]src/main.cpp line:26 func():main NONONO baby![error]src/main.cpp line:32 func():main NONONO baby!
+[error]src/tinyxml/threadpool.cpp line:67 func():work disconnect!

@@ -9,10 +9,17 @@
 #include <pthread.h>
 #include <sockApi.h>
 #include <mysql.h>
+#include <log.h>
 #include <class.h>
-
+#include <sockApi.h>
 #include <socknotify.h>
 
+extern string LOG_LEVEL;
+extern string LOG_FILE;
+extern string LOG_PATH;
+
+char* proxy(CNotify notify);
+char* proStudentInfo(CNotify notify);
    //构造函数
 ThreadPool::ThreadPool(size_t num)
 {
@@ -40,7 +47,7 @@ void * ThreadPool::work(void *p)
 	
 	int fd = 0;
 	while(1)
-	{cout << "test\n";
+	{
 		fd = 0;
 		while(!fd)
 		{
@@ -48,33 +55,32 @@ void * ThreadPool::work(void *p)
 			fd = pool->m_socketList.pop();
 
 		}
+		while(1){
 		//接收请求
-
-		
 		CSockApi cs(fd);
 		CNotify notify;
-		cs.receive_notify(notify);
-		
+		while(!cs.receive_notify(notify));
+		if(notify.get_type()==10000)
+		{
+			LOG_ERROR("disconnect!\n");
+			break;
+		}
 
 		studentInfo stu;
 		stu = *(studentInfo*)notify.get_data(&stu);
 		
-	//	stu.serialize(1);
-		cout << "sockid:" << fd << endl;
-		cout << "pth_id:" << pthread_self() << endl;
-		cout << "name:" << stu.m_name <<endl;
-		cout << "id:" << stu.m_id << endl;
-		//SQL sql;
-		//sql.Connect();
-
-		sleep(2);
-		//sql.Insert(buf+16);
+		LOG_DEBUG("sockid:%d\n",fd);
+		LOG_ERROR("id:%d\nname:%s\n",stu.m_id,stu.m_name);
+		
+		SQL sql;
+		sql.Connect();
+		sql.Insert(proxy(notify));
+		}
 	}
 	return pool;
 }//线程函数
 void ThreadPool::start()//启动所有线程
 {
-	cout << "start\n";
 	for(size_t i=0; i<m_num; i++)
 	{
 		pthread_create(&pth_id,NULL,work,(void*)this);
@@ -90,13 +96,59 @@ void ThreadPool::setWork(int socketid)
 }
 
 
-void proxy(CNotify notify)
+char* proxy(CNotify notify)
 {
-	/*switch(notify)
+	switch(notify.get_type()%10000/100)
 	{
-		case:
-		case:
-	}*/
+		case 1:
+			
+			return proStudentInfo(notify);
+			
+		default:
+			break;
+	}
+	return NULL;
 }
+
+char* proStudentInfo(CNotify notify)
+{
+	char* buf = new char[1024];	
+	switch(notify.get_type())
+	{
+		case PROXY_STUDENT_INFO_ADD:
+			studentInfo stu;
+			stu = *(studentInfo*)notify.get_data();
+			sprintf(buf,"insert into studentInfo (id,name,sex,phoneNumber,birth,idNumber,nation,originPlace,remarks)values(%d,'%s','%s','%s','%s','%s','%s','%s','%s')",stu.m_id,stu.m_name,stu.m_sex,stu.m_phoneNumber,stu.m_birth,stu.m_idNumber,stu.m_nation,stu.m_originPlace,stu.m_remarks);
+			
+			return buf;
+		case PROXY_STUDENT_INFO_ADD_RET:
+		
+			break;
+		case PROXY_STUDENT_INFO_DEL:
+		
+			break;
+		case PROXY_STUDENT_INFO_DEL_RET:
+		
+			break;
+		case PROXY_STUDENT_INFO_ALT:
+		
+			break;
+		case PROXY_STUDENT_INFO_ALT_RET:
+		
+			break;
+		case PROXY_STUDENT_INFO_CHE:
+		
+			break;
+		case PROXY_STUDENT_INFO_CHE_RET:
+		
+			break;
+		default:
+			LOG_ERROR("singnal error\n");
+			break;
+	}
+	
+	return buf;
+}
+
 
 
